@@ -73,7 +73,7 @@ Darknet3D::Darknet3D():
   darknet3d_pub_ = nh_.advertise<gb_visual_detection_3d_msgs::BoundingBoxes3d>(output_bbx3d_topic_, 100);
   markers_pub_ = nh_.advertise<visualization_msgs::MarkerArray>("/darknet_ros_3d/markers", 100);
   //dg-test
-  // uv_converter = nh_.advertiseService("uv_converter",&Darknet3D::uv_convert);
+  uv_converter = nh_.advertiseService("uv_converter",&Darknet3D::uv_convert);
   yolo_sub_ = nh_.subscribe(input_bbx_topic_, 1, &Darknet3D::darknetCb, this);
   pointCloud_sub_ = nh_.subscribe(pointcloud_topic_, 1, &Darknet3D::pointCloudCb, this);
 
@@ -99,20 +99,20 @@ Darknet3D::initParams()
   nh_.param("interested_classes", interested_classes_, interested_classes_);
 }
 //-------dg-test-----------//
-// bool 
-// Darknet3D::uv_convert(darknet_ros_3d::SrvUV2XYZ::Request &req, darknet_ros_3d::SrvUV2XYZ::Response &res)
-// {
-//   int u = req.u;
-//   int v = req.v;
-//   pcl::PointCloud<pcl::PointXYZRGB>::Ptr pcrgb(new pcl::PointCloud<pcl::PointXYZRGB>);
-//   pcl::fromROSMsg(point_cloud_, *pcrgb);
-//   int pcl_index = (v* point_cloud_.width) + u;
-//   pcl::PointXYZRGB center_point =  pcrgb->at(pcl_index);
-//   res.x = center_point.x;
-//   res.y = center_point.y;
-//   res.z = center_point.z;
-//   return true;
-// }
+bool 
+Darknet3D::uv_convert(darknet_ros_3d::SrvUV2XYZ::Request &req, darknet_ros_3d::SrvUV2XYZ::Response &res)
+{
+  int u = req.u;
+  int v = req.v;
+  pcl::PointCloud<pcl::PointXYZRGB>::Ptr pcrgb(new pcl::PointCloud<pcl::PointXYZRGB>);
+  pcl::fromROSMsg(point_cloud_, *pcrgb);
+  int pcl_index = (v* point_cloud_.width) + u;
+  pcl::PointXYZRGB center_point =  pcrgb->at(pcl_index);
+  res.x = center_point.x;
+  res.y = center_point.y;
+  res.z = center_point.z;
+  return true;
+}
 //---------------------------------//
 void
 Darknet3D::pointCloudCb(const sensor_msgs::PointCloud2::ConstPtr& msg)
