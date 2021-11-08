@@ -280,7 +280,9 @@ class MoveArm(object):
     
 
 #-------------------------
-
+    print('pose_goalx %f'%(pose_goal.position.x))
+    print('pose_goaly %f'%(pose_goal.position.y))
+    print('pose_goalz %f'%(pose_goal.position.z))
     move_group.set_pose_target(pose_goal)
     plan = move_group.go(wait=True)
     move_group.stop()
