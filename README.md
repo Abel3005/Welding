@@ -1,6 +1,5 @@
 # Welding
 ## Description
-WeldingProgram
 ====
 ## Version
 ### v1
