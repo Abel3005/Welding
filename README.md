@@ -1,9 +1,6 @@
-# Welding
 ## Description
-#### Welding Program version management
-====
-## Version
-### v1
+Welding Program version management
+## v1
 Description:Service 통신을 통한 YOLO 3D XYZ 받아오기: COMPLETE<br><br>
 XYZ를 맞추고 lookup table 제작<br>
 그럼에도 그라운드 데이터와 테스트 데이터간에 오차가 심함<br>
